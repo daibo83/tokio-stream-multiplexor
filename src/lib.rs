@@ -80,7 +80,13 @@ impl<T> Debug for StreamMultiplexor<T> {
             .finish()
     }
 }
-
+impl<T> Clone for StreamMultiplexor<T> {
+    fn clone(&self) -> Self {
+        Self {
+            inner: self.inner.clone(),
+        }
+    }
+}
 impl<T> Drop for StreamMultiplexor<T> {
     fn drop(&mut self) {
         self.inner.watch_connected_send.send_replace(false);
